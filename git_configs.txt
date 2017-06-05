@@ -1,6 +1,0 @@
-Основные настройки перед работой с гитом (если не настроено):
-git config --global user.name "you_name"
-git config --global user.email email@example.com
-
-Конкретно при работе с нашим проектом:
-git config core.autocrlf false (выполнить да коммитов и пуша на гит-хаб)

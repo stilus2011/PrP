@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block title %}EWY - Статьи{% endblock %}
+
+{% block appstyle %}<link rel="stylesheet" type="text/css" href="{% static 'articles/articles.css' %}">{% endblock %}
+
+{% block a_active %}class="active"{% endblock %}
+
+{% block content %}
+
+    {% for article in articles %}
+
+        <div class="article container-fluid">
+            <div class="row">
+                <div class="article-heading col-md-12">
+                    <h3 class="panel-title"><a href="{% url 'articles:detail' article.id %}">{{ article.title }}</a></h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="article-body col-md-12">
+                    <p>{{ article.content|safe|truncatechars:300 }}</p>
+                    <a class="btn btn-default col-md-12" href="{% url 'articles:detail' article.id %}">Подробнее</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="article-footer col-md-12">
+                    <div class="pub_date col-md-4">
+                        <span>Опубликовано: {{ article.pub_date }}</span>
+                    </div>
+                    <div class="author col-md-4">
+                        <span>Автор: {{ article.author }}</span>
+                    </div>
+                    <div class="rate col-md-2">
+                        <span>Рейтинг: {{ article.rate }}</span>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-block rate_btn">Оценить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% endfor %}
+    <nav class="center-nav" aria-label="Page navigation">
+        <div id="pagination" class="container">
+            <ul class="pagination">
+                {% if articles.has_previous %}
+                    <li>
+                        <a href="?page={{ articles.previous_page_number }}" aria-label="Previous">
+                            <span aria-hidden="false">&laquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+
+                    <li>
+                        <span aria-label="Current">
+                            Страница {{ articles.number }} из {{ articles.paginator.num_pages }}.
+                        </span>
+                    </li>
+
+
+                {% if articles.has_next %}
+                    <li>
+                        <a href="?page={{ articles.next_page_number }}" aria-label="Next">
+                            <span aria-hidden="false">&raquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+
+    </nav>
+
+{% endblock %}

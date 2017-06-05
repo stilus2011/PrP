@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}EWY - Статьи: {{ article.title }}{% endblock %}
+{% block appstyle %}<link rel="stylesheet" type="text/css" href="{% static 'articles/articles.css' %}">{% endblock %}
+{% block a_active %}class="active"{% endblock %}
+{% block content %}
+
+    <div class="article container-fluid">
+        <div class="row">
+            <div class="article-heading col-md-12">
+                <h3 class="panel-title">{{ article.title }}</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="article-body col-md-12">
+                <p>{{ article.content|safe }}</p>
+                <a class="btn btn-default col-md-6" href="{% url 'articles:detail' previous.id %}">
+                    Предыдущая статья: {{ previous.title|truncatechars:40 }}</a>
+                <a class="btn btn-default col-md-6" href="{% url 'articles:detail' nexta.id %}">
+                    Слудующая статья: {{ nexta.title|truncatechars:40 }}</a>
+                <a class="btn btn-default col-md-12" href="{% url 'articles:index' %}">К списку статей</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="article-footer col-md-12">
+                <div class="pub_date col-md-4">
+                    <span>Опубликовано: {{ article.pub_date }}</span>
+                </div>
+                <div class="author col-md-4">
+                    <span>Автор: {{ article.author }}</span>
+                </div>
+                <div class="rate col-md-2">
+                    <span>Рейтинг: {{ article.rate }}</span>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-block rate_btn">Оценить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-info">
+        <div class="panel-body">
+            {% if user.is_authenticated %}
+                <form action="{% url 'articles:comment' article.id %}" method="post">
+                    {% csrf_token %}
+                    <label for="comment">Комментарий</label>
+                    <textarea name="comment" rows="5" cols="60" wrap="hard"></textarea>
+                    <button type="submit">Оставить комментарий</button>
+                </form>
+        {% else %}
+            <span>Зарегестрируйтесь, чтобы оставлять комментарии!</span>
+        {% endif %}
+        </div>
+    </div>
+
+    <div class="panel panel-info">
+        <div class="panel-body">
+            <p>Комментарии:</p>
+            {% for comment in comments %}
+                <div>
+                    {{ comment.content|safe }}
+                    {{ comment.author }}
+                    {{ comment.pub_date }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,46 @@
+#pagination {
+    width: 22%;
+    margin: 0 auto;
+}
+
+.article {
+    background-color: rgb(108,108,108);
+    margin-bottom: 20px;
+    border: 1px solid black;
+}
+
+.article a {
+    text-decoration: none;
+}
+
+.article-heading {
+    padding: 10px 0;
+    text-align: center;
+    border-bottom: 2px solid black;
+}
+
+.article-body {
+    padding: 10px 20px;
+}
+
+.article-footer {
+    padding: 0px;
+    border-top: 2px solid black;
+}
+
+.btn-default {
+    border-radius: 0;
+}
+
+.pub_date, .author {
+    border-right: 2px solid black;
+    padding: 10px;
+}
+
+.rate {
+    padding: 10px;
+}
+
+.rate_btn {
+    margin-top: 3px;
+}

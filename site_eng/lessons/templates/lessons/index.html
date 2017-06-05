@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Уроки{% endblock %}
+
+{% block l_active %}class="active"{% endblock %}
+
+{% block content %}
+
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        {% for section in sections %}
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading{{ section.id }}">
+                <h4 class="panel-title">
+                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ section.id }}" aria-expanded="true" aria-controls="collapse{{ section.id }}">
+                        {{ section.section_title }}
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse{{ section.id }}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading{{ section.id }}">
+                <div class="panel-body">
+                    {% for lesson in section.lesson_set.all %}
+                        <a href="{% url 'lessons:detail' lesson.id %}">Урок {{ lesson.id }}: {{ lesson.title }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
